@@ -7,7 +7,7 @@ public class Main {
     private static final int SIZE = 9; // Size of the board
     private static final int EMPTY = 0; // empty cell
     private static Stack<int[]> moveHistory = new Stack<>(); // Stack move history
-    private static long startTime; // Start time
+    private static long startTime;  // Start time
 
     public static void main(String[] args) {
 
