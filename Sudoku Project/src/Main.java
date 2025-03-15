@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
-        boolean playAgain = true; // replay
+        boolean playAgain = true; //replay
 
         while (playAgain) {
             System.out.print("Welcome to the Sudoku Game!\n");
