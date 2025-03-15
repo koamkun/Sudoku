@@ -15,6 +15,7 @@ public class Main {
         boolean playAgain = true; // replay
 
         while (playAgain) {
+            System.out.print("Welcome to the Sudoku Game!\n");
             System.out.println("Choose difficulty level: easy, medium, or hard");
             String difficulty = input.next().toLowerCase();
             int[][] board = new int[SIZE][SIZE]; // Initialize  board
