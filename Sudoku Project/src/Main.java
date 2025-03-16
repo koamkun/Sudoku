@@ -137,31 +137,30 @@ public class Main {
                 int col = input.nextInt();
                 int num = input.nextInt();
 
-                // Bounds
+                // Bounds checking
                 if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || num < 1 || num > 9) {
                     System.out.println("Out of bounds. Try again.");
                     continue;
                 }
 
-                // Check if the cell is already filled
+                //place empty check
                 if (board[row][col] != EMPTY) {
                     System.out.println("Cell is already filled. Try again.");
                     continue;
                 }
 
-                //Checking move valid
+                // Valid number check
                 if (!isValid(board, row, col, num)) {
                     System.out.println("Invalid move. Number already exists in row, column, or block.");
                     continue;
                 }
 
-                //Place number and record move :)
+                //putting number and +1 move
                 board[row][col] = num;
-                HashSet set = new HashSet();
                 moveHistory.push(new int[]{row, col, num});
                 printBoard(board);
 
-                // Check the board is complete
+                // check is board complete
                 if (isBoardComplete(board)) {
                     System.out.println("Congratulations! You've solved the Sudoku!");
                     displayTime();
@@ -170,14 +169,14 @@ public class Main {
             } else if (input.hasNext()) {
                 String command = input.next();
                 if (command.equals("u")) {
-                    undoMove(board); // Undo
+                    undoMove(board); // undo
                     printBoard(board);
                 } else if (command.equals("n")) {
                     System.out.println("Starting a new puzzle...");
                     board = new int[SIZE][SIZE];
-                    generateSudoku(board, difficulty); // Generate a new puzzle
-                    moveHistory.clear(); // Clear move history
-                    startTime = System.currentTimeMillis(); // Reset the timer
+                    generateSudoku(board, difficulty); // new puzzle
+                    moveHistory.clear(); // new history
+                    startTime = System.currentTimeMillis(); // new timer
                     printBoard(board);
                 } else {
                     System.out.println("Invalid input. Try again.");
@@ -190,12 +189,30 @@ public class Main {
     private static boolean isBoardComplete(int[][] board) {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
-                if (board[row][col] == EMPTY || !isValid(board, row, col, board[row][col])) {
-                    return false; // Board is not complete or invalid
+                if (board[row][col] == EMPTY) {
+                    return false; // if exists empty CELL game is not finished
                 }
             }
         }
-        return true; // Board is complete and valid
+        return isBoardValid(board); // Checking if board is valid filled
+    }
+
+    private static boolean isBoardValid(int[][] board) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                int num = board[row][col];
+                if (num != EMPTY) {
+                    //Deleting number to check if its valid
+                    board[row][col] = EMPTY;
+                    if (!isValid(board, row, col, num)) {
+                        board[row][col] = num; //NUmber is back
+                        return false; // wrong number
+                    }
+                    board[row][col] = num; // Also number is back
+                }
+            }
+        }
+        return true; // Valid board
     }
 
     // Undo
